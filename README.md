@@ -1,6 +1,8 @@
 # A_lil_of_BurpSuite
 <h1>Burp Suite | A Security Testing Tool In Web Application Security</h1>
 
+<h2>Description</h2>
+<p>Here, I'll explore the basics of the web application security testing tool, Burp Suite, as well as its core features and options, paired with demonstrations. I’ve learned much more about web application vulnerabilities through the practical approach with this tool. This tool is very useful, and I plan to invest more time in it to increase my technical skills.</p>
 <br />
 <h2>Utilities Used</h2>
 
@@ -59,7 +61,7 @@ Now is the perfect time to take a closer look at the Intercept tab – which is 
 <br />
 You wouldn’t want to do this process all the time for every single website you visit. Rather than intercepting every request, you might as well have the intercept turned off and analyze recent requests through the <b>HTTP history</b> tab.
 <br/>
-<img src="https://i.imgur.com/J7nXdps.png" height="60%" width="60%" alt="HTTP history tab"/>
+<img src="https://i.imgur.com/J7nXdps.png" height="80%" width="80%" alt="HTTP history tab"/>
 <br />
 On the HTTP history tab, you have your HTTP requests on the left and the server responses on the right for a more in-depth look. Here, you can filter through which type of content you want to see. You may want to only look at images or filter the results by response code. I can also filter by scope. Say you only want to view certain traffic, just the traffic from our targeted web application. We can do this by adding it to scope. 
 <br/>
@@ -95,3 +97,28 @@ As you can see, we get a clearly different result from this modified request. Lo
 <br />
 <img src="https://i.imgur.com/TsMB8Uk.png" height="60%" width="60%" alt="Welcome to the password protected area..."/>
 <br />
+This process can take some manual work to perform; the Intruder feature can add some automation.
+<br />
+<h3>Intruder</h3>
+This feature has much more available in the professional version of Burp Suite, but it allows for spraying target endpoints with requests, this is commonly used for brute-force attacks or fuzzing endpoints. Now I’ll use the same request I sent to the Repeater earlier to execute something closer to a brute-force attack. I will again fail to login into the Login Page under the Brute Force vulnerability section on the DVWA server and send that request to the <b>Intruder</b> feature this time.
+<br />
+<img src="https://i.imgur.com/uz98KSH.png" height="60%" width="60%" alt="Send to Intruder"/>
+<br />
+<img src="https://i.imgur.com/BzvQksN.png" height="60%" width="60%" alt="Payload Position and Attack Type"/>
+<br />
+The values highlighted in green are the positions where the payload will be administered. In the <b>Choose an attack type </b> section, I will change the <b>Attack type</b> from 'Sniper' to 'Cluster bomb'. I choose this for a more effective brute-force attack. In a brute-force attack, you'd usually attempt to insert some word lists of usernames and passwords to see what will gain access. Ideally, you would like each username in one wordlist to pair with each password in another all within one payload. We can configure this process in the <b>Payload</b> sub-tab. There are two payload sets I can define -- where <b>Payload set 1</b> will insert the payload for the first payload position (users), and <b>Payload set 2</b> will insert the payload for the second payload (passwords).
+<br />
+<img src="https://i.imgur.com/S5j1A6p.png" height="60%" width="60%" alt="Payload sets 1 and 2"/>
+<br />
+For both Payload sets 1 and 2, I’ll upload a very simple wordlist of potential strings (composed of usernames or passwords) that could be used as a payload against the web application. There is also a setting where you can utilize a grep function included to flag resulting items that would indicate a certain condition. For example, I can add the following expression to flag a result that would indicate a successful login from the attack.
+<br />
+<img src="https://i.imgur.com/jtORW7D.png" height="60%" width="60%" alt="Grep - Match"/>
+<br />
+Once the payload is configured, we can click the <b>'Start Attack'</b> button. Once it's finished it looks like I have received one response with a successful login!
+<br />
+<img src="https://i.imgur.com/18SMVm6.png" height="60%" width="60%" alt="Successful Attack!"/>
+<br />
+<h2>Helpful References</h2>
+
+- [Burp Suite: The basics](https://tryhackme.com/r/room/burpsuitebasics)
+- [Testing Tools Resource](https://owasp.org/www-project-web-security-testing-guide/stable/6-Appendix/A-Testing_Tools_Resource)
