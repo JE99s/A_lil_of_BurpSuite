@@ -1,4 +1,3 @@
-# A_lil_of_BurpSuite
 <h1>Burp Suite | A Security Testing Tool In Web Application Security</h1>
 
 <h2>Description</h2>
