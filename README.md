@@ -1,5 +1,5 @@
 # A_lil_of_BurpSuite
-<h1>Burp Suite; A Security Testing Tool In Web Application Security</h1>
+<h1>Burp Suite | A Security Testing Tool In Web Application Security</h1>
 
 <br />
 <h2>Utilities Used</h2>
@@ -7,6 +7,7 @@
 - <b>Burp Suite Community Edition</b>
 - <b>Browser (e.g., Google Chrome and Firefox)</b>
 <h2>Environments Used</h2>
+
 - <b>VMware Hypervisor </b>
 - <b>Kali Linux Virtual Machine (VM)</b>
 - <b>Metasploitable 2 (Vulnerable VM)</b>
