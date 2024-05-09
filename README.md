@@ -31,7 +31,7 @@ Burp Suite’s Proxy feature is a crucial tool within the Java-based framework �
 <h4>Foxy Proxy</h4>
 Before I proceed, I would like to mention the browser extension for Burp Suite’s Proxy function, FoxyProxy. I recommend this extension so that it is easy to swap between configurations. It makes the process to configure local web browser traffic to redirect traffic through Burp Suite much easier. I am using Firefox to configure FoxyProxy, but it should be a similar process for other browsers. First, I will install the FoxyProxy Basic extension. Once it’s installed, I click the Extensions button that appears at the top right of my browser window. Then, I click on the FoxyProxy button to access the FoxyProxy options pop-up window.
 <br />
-<img src="https://i.imgur.com/f1HBOQE.png" height="80%" width="80%" alt="Foxy Proxy > Options"/>
+<img src="https://i.imgur.com/f1HBOQE.png" height="45%" width="45%" alt="Foxy Proxy > Options"/>
 <br />
 In that pop-up window, we'll click the <b>Options</b> button--opening a new browser tab with FoxyProxy configurations. Next, click the <b>Add</b> button under the Proxies tab to create a new proxy configuration.
 <img src="https://i.imgur.com/MxTr0RT.png" height="80%" width="80%" alt="Add Button"/>
@@ -44,13 +44,13 @@ Add these details in the following fields:
 
 Now, click the <b>Save</b> button to save the configurations made and then click on the FoxyProxy icon once again at the top right of the Firefox browser and select the 'Burp' configuration. Now, the browser traffic will be redirected through <b>127.0.0.1:8080</b>.
 <br/>
-<img src="https://i.imgur.com/b3RrAEZ.png" height="80%" width="80%" alt="Burp Configuration Created"/>
+<img src="https://i.imgur.com/b3RrAEZ.png" height="40%" width="40%" alt="Burp Configuration Created"/>
 <br />
 To test the proxy, I will navigate back to Burp Suite and make sure that the <b>Intercept</b> feature is turned on in the <b>Proxy</b> tab. I go back to Firefox and travel to any webpage. A request should be intercepted by Burp Suite, as shown below.
 <br />
 <img src="https://i.imgur.com/xN0qwoe.png" height="60%" width="60%" alt="Intercept is on"/>
 <br />
-<img src="https://i.imgur.com/4wAucN3.png" height="80%" width="80%" alt="Intercepted GET Request"/>
+<img src="https://i.imgur.com/4wAucN3.png" height="90%" width="90%" alt="Intercepted GET Request"/>
 <br />
 <h4>Intercept</h4>
 Now is the perfect time to take a closer look at the Intercept tab – which is the main functionality of Burp Suite’s Proxy tool. It sits between us (the users) and whatever website we’re communicating with and allows us to forward requests, drop requests, or take some action on them. In this case it seems I’ve intercepted a GET request to the PortSwigger homepage for Burp Suite. Here, I can use the Intercept tool to send off something different than what we have here. I can try sending a POST request instead of a GET request, so I’ll modify it by simply changing ‘GET’ at the top of the request to ‘POST’. Now, I'll hit <b>Forward</b> to send it off and that will forward the request to the browser. Back on the browser, this error message will display because a GET request wasn't sent to it, but this shows how the proxy can function.
@@ -83,19 +83,19 @@ However, the HTTP history sub-tab under Proxy can still display unwanted traffic
 <h3>Repeater</h3>
 This well-known function allows for capturing, modifying, and resending the same request multiple times. This feature is particularly useful when crafting payloads through trial and error (e.g., SQL injections) or testing for endpoint vulnerabilities. Here, on the HTTP history sub-tab under Proxy, I can right-click on a failed attempt to log in to the <b>Brute Force</b> page of the DVWA server and click <b>Send to Repeater</b>.
 <br/>
-<img src="https://i.imgur.com/3ppkf09.png" height="80%" width="80%" alt="GET request of failed login attempt"/>
+<img src="https://i.imgur.com/3ppkf09.png" height="85%" width="85%" alt="GET request of failed login attempt"/>
 <br />
 Once it is sent to Repeater, you can navigate to the Repeater tab, and it will have that request there for modification. We can modify some values (e.g., username and password parameters) and send the new request as many as one would prefer.
 <br />
-<img src="https://i.imgur.com/iXkqetF.png" height="80%" width="80%" alt="Send to Repeater"/>
+<img src="https://i.imgur.com/iXkqetF.png" height="85%" width="85%" alt="Send to Repeater"/>
 <br />
 The credentials that DVWA gives you to log in are <b>admin:password</b>. So, from the failed request, we can assign the username and password variable values to <b>admin:password</b>. The previous failed to attempt to login came with a response detailing that the "Username and/or password" was incorrect. Let's see what happens when we use Repeater to send a modified request with the correct credentials.
 <br />
-<img src="https://i.imgur.com/TCpytCy.png" height="80%" width="80%" alt="HTTP Response of Successful Login"/>
+<img src="https://i.imgur.com/TCpytCy.png" height="85%" width="85%" alt="HTTP Response of Successful Login"/>
 <br />
 As you can see, we get a clearly different result from this modified request. Looking at the <b>Response</b> section in the screenshot above, we have successfully logged in with valid credentials.
 <br />
-<img src="https://i.imgur.com/TsMB8Uk.png" height="60%" width="60%" alt="Welcome to the password protected area..."/>
+<img src="https://i.imgur.com/TsMB8Uk.png" height="50%" width="50%" alt="Welcome to the password protected area..."/>
 <br />
 This process can take some manual work to perform; the Intruder feature can add some automation.
 <br />
@@ -104,11 +104,11 @@ This feature has much more available in the professional version of Burp Suite, 
 <br />
 <img src="https://i.imgur.com/uz98KSH.png" height="60%" width="60%" alt="Send to Intruder"/>
 <br />
-<img src="https://i.imgur.com/BzvQksN.png" height="60%" width="60%" alt="Payload Position and Attack Type"/>
+<img src="https://i.imgur.com/BzvQksN.png" height="85%" width="85%" alt="Payload Position and Attack Type"/>
 <br />
 The values highlighted in green are the positions where the payload will be administered. In the <b>Choose an attack type </b> section, I will change the <b>Attack type</b> from 'Sniper' to 'Cluster bomb'. I choose this for a more effective brute-force attack. In a brute-force attack, you'd usually attempt to insert some word lists of usernames and passwords to see what will gain access. Ideally, you would like each username in one wordlist to pair with each password in another all within one payload. We can configure this process in the <b>Payload</b> sub-tab. There are two payload sets I can define -- where <b>Payload set 1</b> will insert the payload for the first payload position (users), and <b>Payload set 2</b> will insert the payload for the second payload (passwords).
 <br />
-<img src="https://i.imgur.com/S5j1A6p.png" height="60%" width="60%" alt="Payload sets 1 and 2"/>
+<img src="https://i.imgur.com/S5j1A6p.png" height="80%" width="80%" alt="Payload sets 1 and 2"/>
 <br />
 For both Payload sets 1 and 2, I’ll upload a very simple wordlist of potential strings (composed of usernames or passwords) that could be used as a payload against the web application. There is also a setting where you can utilize a grep function included to flag resulting items that would indicate a certain condition. For example, I can add the following expression to flag a result that would indicate a successful login from the attack.
 <br />
@@ -116,7 +116,7 @@ For both Payload sets 1 and 2, I’ll upload a very simple wordlist of potential
 <br />
 Once the payload is configured, we can click the <b>'Start Attack'</b> button. Once it's finished it looks like I have received one response with a successful login!
 <br />
-<img src="https://i.imgur.com/18SMVm6.png" height="60%" width="60%" alt="Successful Attack!"/>
+<img src="https://i.imgur.com/18SMVm6.png" height="85%" width="85%" alt="Successful Attack!"/>
 <br />
 <h2>Helpful References</h2>
 
