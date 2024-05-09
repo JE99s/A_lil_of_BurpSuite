@@ -44,34 +44,54 @@ Now, click the <b>Save</b> button to save the configurations made and then click
 <br/>
 <img src="https://i.imgur.com/b3RrAEZ.png" height="80%" width="80%" alt="Burp Configuration Created"/>
 <br />
-To test the proxy, I will navigate back to Burp Suite and make sure that the <b>Intercept</b> feature is turned on in the <b>Proxy</b> tab.
+To test the proxy, I will navigate back to Burp Suite and make sure that the <b>Intercept</b> feature is turned on in the <b>Proxy</b> tab. I go back to Firefox and travel to any webpage. A request should be intercepted by Burp Suite, as shown below.
 <br />
-<img src="https://i.imgur.com/FlRsoJv.png" height="80%" width="80%" alt="Disable SMTP authentication"/>
+<img src="https://i.imgur.com/xN0qwoe.png" height="60%" width="60%" alt="Intercept is on"/>
 <br />
-<h3>Install and Configure Thunderbird Application</h3>
-The email server should be ready to go and it is time to test it right now. Here, we'll be <a href="https://www.thunderbird.net/en-US/" target="_blank">installing</a> and using the open-source email client, Thunderbird.
+<img src="https://i.imgur.com/4wAucN3.png" height="80%" width="80%" alt="Intercepted GET Request"/>
+<br />
+<h4>Intercept</h4>
+Now is the perfect time to take a closer look at the Intercept tab – which is the main functionality of Burp Suite’s Proxy tool. It sits between us (the users) and whatever website we’re communicating with and allows us to forward requests, drop requests, or take some action on them. In this case it seems I’ve intercepted a GET request to the PortSwigger homepage for Burp Suite. Here, I can use the Intercept tool to send off something different than what we have here. I can try sending a POST request instead of a GET request, so I’ll modify it by simply changing ‘GET’ at the top of the request to ‘POST’. Now, I'll hit <b>Forward</b> to send it off and that will forward the request to the browser. Back on the browser, this error message will display because a GET request wasn't sent to it, but this shows how the proxy can function.
 <br/>
-<img src="https://i.imgur.com/ODKzhwk.png" height="80%" width="80%" alt="Download Thunderbird Setup.exe"/>
+<img src="https://i.imgur.com/7lw4Z4F.png" height="60%" width="60%" alt="GET changed to POST"/>
 <br />
-Once it is installed, we'll configure the user accounts we created earlier during our hMailServer configurations. On the Local folders, create a new account and select <b>Email</b>. Let's make sure we choose the option to use an existing email. If a pop-up named <b>Mail Account Setup</b> appears, provide the usernames, Email addresses, and passwords we created earlier.
-<br/>
-<img src="https://i.imgur.com/nL24ToQ.png" height="60%" width="60%" alt="Mail Account Setup"/>
+<img src="https://i.imgur.com/WkZAXx0.png" height="60%" width="60%" alt="Error page on browser"/>
 <br />
-In case your configuration of Thunderbird is failing, use a manaul configuration to define the server names in the <b>IMAP</b> and <b>SMTP</b> sections. Set the server name as "localhost" for outgoing configurations. I did this for both users accounts <b>jacob@utsarr.com</b> and <b>user1@utsarr.com</b>.
+You wouldn’t want to do this process all the time for every single website you visit. Rather than intercepting every request, you might as well have the intercept turned off and analyze recent requests through the <b>HTTP history</b> tab.
 <br/>
-<img src="https://i.imgur.com/mUwUxSF.png" height="60%" width="60%" alt="Manual Configuration"/>
-<img src="https://i.imgur.com/iR5zHwK.png" height="60%" width="60%" alt="Manual Configuration for user1"/>
+<img src="https://i.imgur.com/J7nXdps.png" height="60%" width="60%" alt="HTTP history tab"/>
 <br />
-Then, we should receive a warning message. Let's check the box that says, "I understand the risks", and click <b>Confirm</b> to continue.
+On the HTTP history tab, you have your HTTP requests on the left and the server responses on the right for a more in-depth look. Here, you can filter through which type of content you want to see. You may want to only look at images or filter the results by response code. I can also filter by scope. Say you only want to view certain traffic, just the traffic from our targeted web application. We can do this by adding it to scope. 
 <br/>
-<img src="https://i.imgur.com/alm6uXG.png" height="60%" width="60%" alt="Warning!"/>
+<h3>Scope</h3>
+One of the most important aspects of using Burp Suite is Scoping. Capturing and logging all this traffic can quickly become overwhelming and inconvenient, especially when you would only want to focus on specific web applications. This is where the Scope function comes in handy. Setting a scope for the project will define what gets proxied and logged in Burp Suite. We can restrict Burp Suite to target only the specific web application(s) considered for testing. We can do this by switching to the <b>Target</b> tab, right-clicking on the target from the list on the left-hand panel and selecting <b>Add to Scope</b>. Then we'll be prompted to choose whether we want to stop logging anything that is not in scope, and in most cases, that would be <b>yes</b>. Here, I have added the IP address of the vulnerable VM, Metasploitable 2 (MS2), containing its Damn Vulnerable Web Application (DVWA) server.
 <br />
-Then, we'll log in to user accounts we finished configuring.
-<br/>
-<h3>Send Yourself an E-mail</h3>
-Once we have create Thunderbird profiles based from the hMailServer accounts, we'll try sending a couple of test emails to ensure communication between these accounts.
-<br/>
-<img src="https://i.imgur.com/Zfee9lp.png" height="75%" width="75%" alt="Tunderbird incoming email"/>
+<img src="https://i.imgur.com/fehyJRL.png" height="60%" width="60%" alt="Add to scope"/>
 <br />
-<img src="https://i.imgur.com/nfjFkSw.png" height="75%" width="75%" alt="Greetings message received"/>
+<img src="https://i.imgur.com/6ob0Dht.png" height="60%" width="60%" alt="Yes..."/>
+<br />
+To check the scope, we can switch to the Scope settings sub-tab within the <b>Target</b> -- the window allows us to control the target scope by including or excluding domains or IP addresses.
+<br/>
+<img src="https://i.imgur.com/1Q85GqD.png" height="60%" width="60%" alt="Target scope"/>
+<br />
+However, the HTTP history sub-tab under Proxy can still display unwanted traffic, that's because we must adjust the filter to <b>Show only in-scope items</b>.
+<br />
+<img src="https://i.imgur.com/fWY2FYU.png" height="60%" width="60%" alt="Configure filter"/>
+<br />
+<h3>Repeater</h3>
+This well-known function allows for capturing, modifying, and resending the same request multiple times. This feature is particularly useful when crafting payloads through trial and error (e.g., SQL injections) or testing for endpoint vulnerabilities. Here, on the HTTP history sub-tab under Proxy, I can right-click on a failed attempt to log in to the <b>Brute Force</b> page of the DVWA server and click <b>Send to Repeater</b>.
+<br/>
+<img src="https://i.imgur.com/3ppkf09.png" height="80%" width="80%" alt="GET request of failed login attempt"/>
+<br />
+Once it is sent to Repeater, you can navigate to the Repeater tab, and it will have that request there for modification. We can modify some values (e.g., username and password parameters) and send the new request as many as one would prefer.
+<br />
+<img src="https://i.imgur.com/iXkqetF.png" height="80%" width="80%" alt="Send to Repeater"/>
+<br />
+The credentials that DVWA gives you to log in are <b>admin:password</b>. So, from the failed request, we can assign the username and password variable values to <b>admin:password</b>. The previous failed to attempt to login came with a response detailing that the "Username and/or password" was incorrect. Let's see what happens when we use Repeater to send a modified request with the correct credentials.
+<br />
+<img src="https://i.imgur.com/TCpytCy.png" height="80%" width="80%" alt="HTTP Response of Successful Login"/>
+<br />
+As you can see, we get a clearly different result from this modified request. Looking at the <b>Response</b> section in the screenshot above, we have successfully logged in with valid credentials.
+<br />
+<img src="https://i.imgur.com/TsMB8Uk.png" height="60%" width="60%" alt="Welcome to the password protected area..."/>
 <br />
